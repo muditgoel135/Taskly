@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+  <!-- AI Prompt Bar -->
+  <div class="lg:col-span-3 bg-neutral-900 border border-neutral-800 rounded-xl p-4">
+    <form id="ai-form" hx-post="/api/v1/ai/assist" hx-trigger="submit" hx-target="#ai-out" hx-ext="json-enc">
+      <div class="flex gap-2">
+        <input name="prompt" placeholder="Ask AI to plan your week, break down an assignment, or suggest focus sounds…" class="flex-1 bg-neutral-800 rounded px-4 py-3" />
+        <button class="rounded bg-indigo-600 px-4">Ask</button>
+      </div>
+    </form>
+    <div id="ai-out" class="mt-2 text-sm text-neutral-300"></div>
+  </div>
+
+  <!-- Quick Add Task -->
+  {% include 'components/quick_add_task.html' %}
+
+  <!-- Quick Add Event -->
+  {% include 'components/quick_add_event.html' %}
+
+  <!-- Upcoming -->
+  {% include 'components/upcoming.html' %}
+
+  <!-- Frequently visited pages -->
+  <div class="lg:col-span-3">{% include 'components/freq_pages.html' %}</div>
+</div>
+{% endblock %}

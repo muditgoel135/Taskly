@@ -1,0 +1,7 @@
+<form hx-post="/api/v1/tasks/" hx-trigger="submit" hx-target="#upcoming" class="bg-neutral-900 border border-neutral-800 rounded-xl p-3">
+  <div class="flex gap-2">
+    <input name="title" placeholder="Quick add task…" class="flex-1 bg-neutral-800 rounded px-3 py-2 focus:outline-none" />
+    <input name="due_at" type="datetime-local" class="bg-neutral-800 rounded px-3 py-2" />
+    <button class="px-3 py-2 rounded bg-indigo-600">Add</button>
+  </div>
+</form>

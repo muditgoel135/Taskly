@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="manifest" href="/static/manifest.json" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Arial', 'ui-sans-serif', 'system-ui'] }
+          }
+        }
+      }
+    </script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x" defer></script>
+    <title>Task Planner</title>
+    <style>
+      html,body{ height:100%; }
+    </style>
+  </head>
+  <body class="h-full bg-neutral-900 text-neutral-100 font-sans">
+    <div class="min-h-full" x-data="{ tab: 'home', group: 'main' }">
+      <div class="flex">
+        {% include 'components/sidebar.html' %}
+        <main class="flex-1 p-6">
+          {% include 'components/tabs.html' %}
+          <div class="mt-4">
+            {% block content %}{% endblock %}
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
