@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskly - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Taskly</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Your Tasks</h2>
+            <ul id="task-list">
+                {% for task in tasks %}
+                    <li>{{ task }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>Add a New Task</h2>
+            <form action="/add-task" method="POST">
+                <input type="text" name="task" placeholder="Enter your task" required>
+                <button type="submit">Add Task</button>
+            </form>
+        </section>
+        <section>
+            <h2>Upcoming events</h2>
+            <ul id="event-list">
+                {% for event in events %}
+                    <li>{{ event }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>Add a New Event</h2>
+            <form action="/add-event" method="POST">
+                <input type="text" name="event" placeholder="Enter your event" required>
+                <button type="submit">Add Event</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Taskly. All rights reserved.</p>
+    </footer>
+</body>
+</html>
