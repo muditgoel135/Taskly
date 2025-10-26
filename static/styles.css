@@ -23,3 +23,11 @@ form button {
 .pointer {
     cursor: pointer !important;
 }
+
+nav {
+    background-color: #404040;
+    position: fixed;
+}
+table th, table td {
+    border-color: #555555 !important;
+}

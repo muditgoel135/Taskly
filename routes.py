@@ -17,14 +17,10 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
-
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
 
 
 @app.route("/tasks")
@@ -47,3 +43,6 @@ def add_task():
 def add_event():
     pass  # Placeholder for add_event route implementation
     return redirect("/")
+
+
+app.run(debug=True)
