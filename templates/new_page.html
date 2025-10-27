@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Create new page — Taskly</title>
+    <style>
+        :root {
+            --bg: #0f1720;
+            --card: #121826;
+            --muted: #9aa4b2;
+            --accent: #7dd3fc;
+            --white: #eef2ff;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            width: min(720px, 94vw);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 24px rgba(2, 6, 23, 0.6);
+        }
+
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+        }
+
+        p.lead {
+            color: var(--muted);
+            margin: 0 0 18px 0;
+            font-size: 14px;
+        }
+
+        form {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: transparent;
+            color: var(--white);
+            font-size: 15px;
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #7b8794
+        }
+
+        button {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 0;
+            background: var(--accent);
+            color: #022;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        a.link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        @media (max-width:480px) {
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card" role="main">
+        <h1>Create a new page</h1>
+        <p class="lead">Give it a title and jump straight into the editor. You can always rename it later.</p>
+
+        <!-- form submits to the /new route (POST) -->
+        <form action="{{ url_for('pages.new_page') }}" method="post" autocomplete="off">
+            <input type="text" name="title" placeholder="Page title (e.g. 'Math Notes')" maxlength="255" />
+            <button type="submit">Create</button>
+        </form>
+
+        <div class="hint">
+            Tip: leave the title blank to create an "Untitled Page".
+        </div>
+
+        <div class="row" style="margin-top:16px;">
+            <a class="link" href="{{ url_for('pages.index') }}">&larr; Back to all pages</a>
+        </div>
+    </div>
+</body>
+
+</html>
