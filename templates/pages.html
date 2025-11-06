@@ -6,30 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taskly - Home</title>
 
+    <!-- Import Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Import `styles.css` -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Import the page icon -->
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+
+    <!-- Import Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body class="text-white">
+    <!-- Create the sidebar as an iframe -->
     <nav>
         <iframe src="/sidebar" style="border:none; height:100vh; width:200px; position:fixed; left:0; top:0;"></iframe>
     </nav>
 
+    <!-- Add the rest of the body in a div with space to fit the sidebar on the left -->
     <div style="margin-left: 210px; padding: 20px;">
         <h1>All pages</h1>
+        <hr>
+
+        <!-- Load all pages -->
         {% for page in pages %}
         <div class="page-card">
+            <!-- Information about the page -->
             <h2>{{ page.title }}</h2>
             <p>Last updated: {{ page.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+
+            <!-- Edit and Delete buttons -->
             <a href="{{ url_for('pages.edit_page', page_id=page.id) }}" class="btn btn-primary">Edit</a>
             <form action="{{ url_for('pages.delete_page', page_id=page.id) }}" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>
+
         {% else %}
+        <!-- Handle cases when no pages are found -->
         <p>No pages available.</p>
+        <a href="/new" class="btn btn-success">Create your first page</a>
+        <a href="/" class="btn btn-secondary">Go back home</a>
         {% endfor %}
     </div>
 </body>

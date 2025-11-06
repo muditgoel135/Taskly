@@ -93,7 +93,9 @@ def api_save(page_id):
     if not cleaned_title:
         cleaned_title = "Untitled Page"
 
-    cleaned_html = bleach.clean(raw_html, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRS, strip=True)
+    cleaned_html = bleach.clean(
+        raw_html, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRS, strip=True
+    )
 
     # assign
     p.title = cleaned_title
@@ -120,6 +122,7 @@ def api_save(page_id):
         return jsonify(success=False, error="failed_to_save"), 500
 
     return jsonify(success=True, updated_at=p.updated_at.isoformat())
+
 
 @pages_bp.route("/sidebar")
 def sidebar():

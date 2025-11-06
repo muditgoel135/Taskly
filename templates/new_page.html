@@ -5,6 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Create new page — Taskly</title>
+
+    <!-- Import the page icon -->
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+
+    <!-- Define the styles of the page -->
     <style>
         :root {
             --bg: #0f1720;
@@ -124,7 +129,9 @@
         </div>
 
         <div class="row" style="margin-top:16px;">
-            <a class="link" href="{{ url_for('pages.index') }}">&larr; Back to all pages</a>
+            <a class="link" href="{{ url_for('pages.index') }}">
+                &larr; Back to all pages
+            </a>
         </div>
     </div>
 </body>

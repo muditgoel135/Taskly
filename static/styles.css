@@ -1,25 +1,32 @@
 body {
     background-color: #222222;
 }
+
 :root {
     --bs-body-bg: #222222;
     --bs-section-bg: #000000;
     --bs-body-color: #ffffff;
     --bs-secondary-color: #9ca3af;
 }
+
 section {
     background-color: var(--bs-section-bg);
 }
+
 .pg-link {
     color: var(--bs-txt-color);
     background-color: var(--bs-body-bg);
 }
-form input, form button {
+
+form input,
+form button {
     background-color: var(--bs-body-bg);
 }
+
 form button {
-    width: auto !important; 
+    width: auto !important;
 }
+
 .pointer {
     cursor: pointer !important;
 }
@@ -30,7 +37,9 @@ nav {
     width: 200px;
     height: 100%;
 }
-table th, table td {
+
+table th,
+table td {
     border: 1px solid white !important;
     padding: 8px !important;
 }

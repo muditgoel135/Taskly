@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{{ page.title }} — Taskly Editor</title>
 
+    <!-- Import Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
@@ -23,6 +24,10 @@
         var MQ = MathQuill.getInterface(2);
     </script>
 
+    <!-- Import the page icon -->
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/x-icon">
+
+    <!-- Define the styles of the page -->
     <style>
         :root {
             --bg: #0f1720;
@@ -149,7 +154,9 @@
     <header>
         <div>
             <a class="link" href="{{ url_for('pages.index') }}">← All pages</a>
-            <h1 id="pageTitle" contenteditable="true" style="margin: 4px;">{{ page.title }}</h1>
+            <h1 id="pageTitle" contenteditable="true" style="margin: 4px;">
+                {{ page.title }}
+            </h1>
             <span id="status"></span>
         </div>
         <button id="saveBtn">Save</button>
@@ -159,15 +166,17 @@
         </button>
     </header>
 
+    <!-- Editing area for the page -->
     <div id="editor"></div>
 
     <footer>
         <span>Taskly Page Editor — autosaves every 8 seconds</span>
     </footer>
 
-    <!-- Quill JS -->
+    <!-- Import Quill JS -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+    <!-- Quill JS Editor -->
     <script>
         const pageId = {{ page.id }};
         const initialHtml = {{ page.content| tojson | safe }};
