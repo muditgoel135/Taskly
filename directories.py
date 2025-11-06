@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 pages_bp = Blueprint("pages", __name__)
 
-# Tweak bleach policy to your needs
+# Sanitization settings
 ALLOWED_TAGS = list(bleach.sanitizer.ALLOWED_TAGS) + [
     "h1",
     "h2",
@@ -26,24 +26,142 @@ ALLOWED_TAGS = list(bleach.sanitizer.ALLOWED_TAGS) + [
     "tr",
     "td",
     "th",
+    # Quill-specific / common HTML emitted by Quill formats
+    "p",
+    "div",
+    "span",
+    "br",
+    "hr",
+    "strong",  # bold (sometimes <b>)
+    "b",
+    "em",  # italic (sometimes <i>)
+    "i",
+    "u",  # underline
+    "s",  # strike (sometimes <del> or <strike>)
+    "del",
+    "sub",
+    "sup",
+    "blockquote",
+    "code",  # inline code
+    "ol",
+    "ul",
+    "li",
+    "input",  # checklist (checkbox)
+    "figure",  # some editors wrap media
+    "figcaption",
+    "img",
+    "iframe",  # video embeds (YouTube, etc.)
+    "video",  # <video> tag (less common, but possible)
+    "source",  # for <video>/<audio>
+    "a",  # links
+    "kbd",  # sometimes code-like formatting
+    "svg",  # some embeds/icons (if you expect them)
+    # keep the table tags you had (kept above)
 ]
+
 ALLOWED_ATTRS = {
     **bleach.sanitizer.ALLOWED_ATTRIBUTES,
-    "img": ["src", "alt", "width", "height"],
-    "*": ["style"],
+    # image attributes Quill may include or that are safe for images/embed
+    "img": [
+        "src",
+        "alt",
+        "width",
+        "height",
+        "title",
+        "loading",
+        "referrerpolicy",
+        "data-src",
+        "class",
+        "style",
+    ],
+    # anchor attributes
+    "a": ["href", "title", "target", "rel", "class", "style"],
+    # iframe/video/source attributes for embeds
+    "iframe": [
+        "src",
+        "width",
+        "height",
+        "frameborder",
+        "allow",
+        "allowfullscreen",
+        "loading",
+        "referrerpolicy",
+        "sandbox",
+        "name",
+        "class",
+        "style",
+    ],
+    "video": [
+        "src",
+        "width",
+        "height",
+        "controls",
+        "poster",
+        "preload",
+        "loop",
+        "muted",
+        "autoplay",
+        "class",
+        "style",
+    ],
+    "source": ["src", "type"],
+    # input used for checklists
+    "input": ["type", "checked", "disabled", "readonly", "class", "style"],
+    # table related
+    "table": [
+        "class",
+        "style",
+        "summary",
+        "width",
+        "border",
+        "cellpadding",
+        "cellspacing",
+    ],
+    "td": ["colspan", "rowspan", "headers", "scope", "class", "style"],
+    "th": ["colspan", "rowspan", "headers", "scope", "class", "style"],
+    "tr": ["class", "style"],
+    "thead": ["class", "style"],
+    "tbody": ["class", "style"],
+    # headings and other blocks (common attributes)
+    "h1": ["id", "class", "style", "dir"],
+    "h2": ["id", "class", "style", "dir"],
+    "h3": ["id", "class", "style", "dir"],
+    "pre": ["class", "style"],
+    "code": ["class", "style"],
+    "blockquote": ["cite", "class", "style", "dir"],
+    # generic containers, inline elements
+    "div": ["id", "class", "style", "dir"],
+    "p": ["id", "class", "style", "dir"],
+    "span": ["id", "class", "style", "dir", "data-value", "data-formula", "data-*"],
+    "strong": ["class", "style"],
+    "em": ["class", "style"],
+    "u": ["class", "style"],
+    "s": ["class", "style"],
+    "sub": ["class", "style"],
+    "sup": ["class", "style"],
+    "ol": ["start", "class", "style"],
+    "ul": ["class", "style"],
+    "li": ["class", "style"],
+    "figure": ["class", "style"],
+    "figcaption": ["class", "style"],
+    "kbd": ["class", "style"],
+    # allow aria and role attributes for accessibility (optional but useful)
+    "*": ["style", "class", "id", "dir", "role", "aria-label", "aria-hidden", "data-*"],
 }
 
 
+# Routes
 @pages_bp.route("/")
 def index():
     """Render the home page with a list of pages."""
     pages = Page.query.order_by(Page.updated_at.desc()).all()
-    recent_pages = pages[:5]  # for example, show the 5 most recently updated pages
+    recent_pages = pages[:5]  # show the 5 most recently updated pages
     return render_template("index.html", pages=pages, recent_pages=recent_pages)
 
 
 @pages_bp.route("/new", methods=["GET", "POST"])
 def new_page():
+    """Create a new page and redirect to its editor."""
     if request.method == "POST":
         title = request.form.get("title", "Untitled Page")
         p = Page(title=title, content="<p>Start writing...</p>")
@@ -57,6 +175,7 @@ def new_page():
 
 @pages_bp.route("/page/<int:page_id>/delete", methods=["POST"])
 def delete_page(page_id):
+    """Delete a page by its ID."""
     p = Page.query.get_or_404(page_id)
     db.session.delete(p)
     db.session.commit()
@@ -65,12 +184,14 @@ def delete_page(page_id):
 
 @pages_bp.route("/page/<int:page_id>")
 def edit_page(page_id):
+    """Render the page editor for a given page ID."""
     p = Page.query.get_or_404(page_id)
     return render_template("editor.html", page=p)
 
 
 @pages_bp.route("/pages")
 def list_pages():
+    """Render a list of all pages."""
     pages = Page.query.order_by(Page.updated_at.desc()).all()
     return render_template("pages.html", pages=pages)
 

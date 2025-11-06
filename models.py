@@ -13,7 +13,6 @@ class Page(db.Model):
 
     # Optional: store content in Delta format for rich text editors
     content_delta = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )

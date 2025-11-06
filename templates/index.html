@@ -21,9 +21,10 @@
 
 <body class="text-white">
     <nav>
-        {% include 'sidebar.html' %}
+        <iframe src="/sidebar" style="border:none; height:100vh; width:200px; position:fixed; left:0; top:0; border-right: 1px solid #d0d0d0;"></iframe>
     </nav>
 
+    <!-- Add the rest of the page in a div with a 200px left margin -->
     <div style="margin-left: 200px;">
         <header class="p-5 rounded-3 text-center text-white">
             <h1>Welcome to Taskly</h1>
@@ -31,6 +32,7 @@
 
         <main>
             <div class="row flex justify-content-center">
+                <!-- Show tasks -->
                 <section class="col-md-5 p-4 text-white rounded-3 m-3 pointer" onclick="window.location.href='/tasks'">
                     <h2>Your Tasks</h2>
                     <table style="height: 300px; overflow: auto; width: 100%;">
@@ -59,6 +61,7 @@
                     </form>
                 </section>
 
+                <!-- Show events -->
                 <section class="col-md-5 p-4 text-white rounded-3 m-3 pointer" onclick="window.location.href='/events'">
                     <h2>Your Upcoming Events</h2>
                     <table style="height: 300px; overflow: auto; width: 100%;">
@@ -90,6 +93,7 @@
             </div>
         </main>
 
+        <!-- Section for recently visited pages -->
         <section class="row text-white text-center m-4 col-11 mx-auto p-4 rounded-3">
             <h2>Recently visited pages</h2><br><br>
             <div class="d-flex justify-content-center flex-wrap">
@@ -98,6 +102,7 @@
                 {% endfor %}
         </section>
 
+        <!-- Section for all pages -->
         <section class="row text-white text-center m-4 col-11 mx-auto p-4 rounded-3">
             <h2>All Pages</h2><br><br>
             <div class="d-flex justify-content-center flex-wrap">
