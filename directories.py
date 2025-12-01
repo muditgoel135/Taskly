@@ -250,3 +250,13 @@ def sidebar():
     """Render the sidebar partial."""
     pages = Page.query.order_by(Page.updated_at.desc()).all()
     return render_template("sidebar.html", pages=pages)
+
+@pages_bp.route("/events")
+def events():
+    """Render the events page."""
+    return redirect(url_for("pages.index"))
+
+@pages_bp.route("/tasks")
+def tasks():
+    """Render the tasks page."""
+    return redirect(url_for("pages.index"))
